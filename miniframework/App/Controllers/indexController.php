@@ -1,18 +1,19 @@
 <?php
     namespace App\Controllers;
+
     use MF\Controller\Action;
-    use App\Connection;
+    use MF\Model\Container;
+
     use App\Models\Produto;
+    use App\Models\Info;
 
     class indexController extends Action {
 
         public function index()
         {
             //instancia de conexao
-            $conn = Connection::getDb();
-
+            $produto =  Container::getModel('produto');
             //instanciar modelo
-            $produto = new Produto($conn);
 
 
             $produtos = $produto->getProdutos();
@@ -26,7 +27,14 @@
 
         public function sobreNos()
         {
-           $this->render('sobrenos', 'layout1');
+            //instancia de conexao
+            $info = Container::getModel('info');
+
+            //instanciar modelo
+            $infos = $info->getInfo();
+
+            $this->view->dados = $infos;
+            $this->render('sobrenos', 'layout1');
         }
 
 
